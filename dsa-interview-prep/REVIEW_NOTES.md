@@ -11,6 +11,8 @@ These notes track what was cleaned up and what still matters for interview depth
 - All root JavaScript files now export their main function or class.
 - Example output is guarded behind `if (require.main === module)`.
 - `quicksort.js`, `fibonacci.js`, `palindrome.js`, `sortedListToBST.js`, `deleteDuplicates.js`, `NthNode.js`, and `graph.js` had correctness or reuse issues fixed during the refactor.
+- `linkedListCycle.js` adds LeetCode 142 with Set-based cycle detection.
+- `intersectionOfTwoLinkedLists.js` adds LeetCode 160 with both the intuitive Set approach and the constant-space two-pointer approach.
 
 ## Remaining Interview-Depth Items
 

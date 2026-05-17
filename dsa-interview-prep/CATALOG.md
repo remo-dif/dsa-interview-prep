@@ -60,11 +60,11 @@ Missing practice:
 | Ready | `ReverseKGroup.js` | Reverse nodes in k-group |
 | Ready | `rotateRight.js` | Circular list rotation |
 | Ready | `deleteDuplicates.js` | Duplicate removal with dummy node |
+| Ready | `linkedListCycle.js` | Set-based cycle detection and cycle entry |
+| Ready | `intersectionOfTwoLinkedLists.js` | Set-based and two-pointer intersection detection |
 
 Missing practice:
 
-- Cycle detection
-- Intersection of two linked lists
 - Reverse entire linked list
 
 ## Sets, Dictionaries, Maps, and Hashes
