@@ -37,7 +37,10 @@ function letterCombinations(digits) {
 //Time complexity: O(3^m * 4^n), where m is the number of digits that map to 3 letters and n is the number of digits that map to 4 letters.
 //Space complexity: O(3^m * 4^n) to store the result list.
 
-// Example usage:
-const digits = "23";
-console.log(letterCombinations(digits)); // Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+module.exports = letterCombinations;
+
+if (require.main === module) {
+  const digits = "23";
+  console.log(letterCombinations(digits)); // Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+}
 

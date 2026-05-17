@@ -1,48 +1,54 @@
-// linkedliststack.js
-const LinkedList = require("./linkedlist");
+class Stack {
+  #items = [];
 
-// Implementation of a stack using a linked list
-class LinkedListStack {
-  // Stack structure using linked list
-  constructor() {
-    this.list = new LinkedList();
+  push(item) {
+    this.#items.push(item);
   }
 
-  // Push a value onto the stack
-  push(value) {
-    this.list.prepend(value);
-  }
-
-  // Pop a value off the stack
   pop() {
-    return this.list.removeFromFront();
+    return this.#items.pop();
   }
 
-  // Peek at the top value of the stack without removing it
   peek() {
-    return this.list.head ? this.list.head.value : null;
+    return this.#items[this.#items.length - 1];
   }
 
-  // Check if the stack is empty
   isEmpty() {
-    return this.list.isEmpty();
+    return this.#items.length === 0;
   }
 
-  // Get the size of the stack
+  get size() {
+    return this.#items.length;
+  }
+
   getSize() {
-    return this.list.getSize();
+    return this.size;
   }
 
-  // Print the stack
+  clear() {
+    this.#items = [];
+  }
+
+  toString() {
+    if (this.isEmpty()) {
+      return "Empty Stack";
+    }
+    return this.#items
+      .map((item) => (typeof item === "object" && item !== null ? JSON.stringify(item) : String(item)))
+      .join(", ");
+  }
+
   print() {
-    this.list.print();
+    console.log(this.toString());
   }
 }
 
-// Example usage:
-const stack = new LinkedListStack();
-console.log("Is stack empty?", stack.isEmpty());
-stack.push(10);
-stack.push(20);
-stack.push(30);
-stack.print();
+module.exports = Stack;
+
+if (require.main === module) {
+  const stack = new Stack();
+  stack.push(10);
+  stack.push(20);
+  stack.push(30);
+  console.log(stack.toString());
+}

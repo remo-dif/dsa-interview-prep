@@ -19,20 +19,13 @@ function wordBreak(s, wordDict) {
   return dp[s.length];
 }
 
-// Example usage:
-const s = "leetcode";
-const wordDict = ["leet", "code"];
-console.log(wordBreak(s, wordDict)); // Output: true
+module.exports = wordBreak;
 
-// Another example:
-const s2 = "applepenapple";
-const wordDict2 = ["apple", "pen"];
-console.log(wordBreak(s2, wordDict2)); // Output: true
-
-// Another example:
-const s3 = "catsandog";
-const wordDict3 = ["cats", "dog", "sand", "and", "cat"];
-console.log(wordBreak(s3, wordDict3)); // Output: false
+if (require.main === module) {
+  console.log(wordBreak("leetcode", ["leet", "code"])); // Output: true
+  console.log(wordBreak("applepenapple", ["apple", "pen"])); // Output: true
+  console.log(wordBreak("catsandog", ["cats", "dog", "sand", "and", "cat"])); // Output: false
+}
 
 // Time complexity: O(n^2) where n is the length of the string s.
 // Space complexity: O(n) for the dp array and O(m) for the word set, where m is the number of words in the dictionary.

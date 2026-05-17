@@ -44,3 +44,7 @@ function swapPairsRecursive(head) {
 // Complexity Analysis
 // Time Complexity: O(N), where N is the number of nodes in the linked list.
 // Space Complexity: O(1) for the iterative approach and O(N) for the recursive approach due to call stack.
+module.exports = {
+    swapPairs,
+    swapPairsRecursive,
+};

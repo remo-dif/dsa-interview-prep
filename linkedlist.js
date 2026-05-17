@@ -1,109 +1,173 @@
-// linkedlist.js
-
-// Implementation of a singly linked list
 class LinkedListNode {
-  // Node structure for linked list
-  constructor() {
-    this.head = null;
-    this.tail = null;
-    this.size = 0;
+  constructor(data, next = null) {
+    this.data = data;
+    this.next = next;
+  }
+}
+
+class LinkedList {
+  #head = null;
+  #size = 0;
+
+  append(data) {
+    const newNode = new LinkedListNode(data);
+    if (!this.#head) {
+      this.#head = newNode;
+    } else {
+      let current = this.#head;
+      while (current.next) {
+        current = current.next;
+      }
+      current.next = newNode;
+    }
+    this.#size++;
   }
 
-  // Check if the linked list is empty
+  prepend(data) {
+    this.#head = new LinkedListNode(data, this.#head);
+    this.#size++;
+  }
+
+  insert(data, position) {
+    if (position < 0 || position > this.#size) {
+      return false;
+    }
+    if (position === 0) {
+      this.prepend(data);
+      return true;
+    }
+
+    const newNode = new LinkedListNode(data);
+    let previous = this.#head;
+    for (let index = 0; index < position - 1; index++) {
+      previous = previous.next;
+    }
+    newNode.next = previous.next;
+    previous.next = newNode;
+    this.#size++;
+    return true;
+  }
+
+  removeAt(position) {
+    if (position < 0 || position >= this.#size) {
+      return undefined;
+    }
+
+    let current = this.#head;
+    if (position === 0) {
+      this.#head = current.next;
+    } else {
+      let previous;
+      for (let index = 0; index < position; index++) {
+        previous = current;
+        current = current.next;
+      }
+      previous.next = current.next;
+    }
+
+    this.#size--;
+    return current.data;
+  }
+
+  remove(data, equalsFn = (a, b) => a === b) {
+    const index = this.indexOf(data, equalsFn);
+    return index === -1 ? undefined : this.removeAt(index);
+  }
+
+  indexOf(data, equalsFn = (a, b) => a === b) {
+    let current = this.#head;
+    let index = 0;
+    while (current) {
+      if (equalsFn(current.data, data)) {
+        return index;
+      }
+      current = current.next;
+      index++;
+    }
+    return -1;
+  }
+
+  getElementAt(position) {
+    if (position < 0 || position >= this.#size) {
+      return undefined;
+    }
+    let current = this.#head;
+    for (let index = 0; index < position; index++) {
+      current = current.next;
+    }
+    return current;
+  }
+
   isEmpty() {
-    return this.size === 0;
+    return this.#size === 0;
   }
 
-  // Get the size of the linked list
+  clear() {
+    this.#head = null;
+    this.#size = 0;
+  }
+
+  get size() {
+    return this.#size;
+  }
+
   getSize() {
     return this.size;
   }
 
-  // Print the linked list
+  get head() {
+    return this.#head;
+  }
+
+  forEach(callback) {
+    let current = this.#head;
+    let index = 0;
+    while (current) {
+      callback(current.data, index);
+      current = current.next;
+      index++;
+    }
+  }
+
+  toArray() {
+    const result = [];
+    this.forEach((data) => result.push(data));
+    return result;
+  }
+
+  toString() {
+    if (this.isEmpty()) {
+      return "";
+    }
+    return this.toArray()
+      .map((data) => (typeof data === "object" && data !== null ? JSON.stringify(data) : String(data)))
+      .join(", ");
+  }
+
   print() {
-    const values = [];
-    let currentNode = this.head;
-    while (currentNode) {
-      values.push(currentNode.value);
-      currentNode = currentNode.next;
-    }
-    console.log(values.join(" -> "));
+    console.log(this.toString());
   }
 
-  // Append a new value to the end of the linked list
-  append(value) {
-    const newNode = { value: value, next: null };
-    if (!this.head) {
-      this.head = newNode;
-      this.tail = newNode;
-    } else {
-      this.tail.next = newNode;
-      this.tail = newNode;
+  reverse() {
+    let current = this.#head;
+    let previous = null;
+    while (current) {
+      const next = current.next;
+      current.next = previous;
+      previous = current;
+      current = next;
     }
-    this.size++;
-  }
-
-  // Prepend a new value to the start of the linked list
-  prepend(value) {
-    const newNode = { value: value, next: this.head };
-    this.head = newNode;
-    if (!this.tail) {
-      this.tail = newNode;
-    }
-    this.size++;
-  }
-
-  // Find a node by its value
-  find(value) {
-    if (!this.head) {
-      return null;
-    }
-    let currentNode = this.head;
-    while (currentNode) {
-      if (currentNode.value === value) {
-        return currentNode;
-      }
-      currentNode = currentNode.next;
-    }
-    return null;
-  }
-
-  // Remove a node from the front of the linked list
-  removeFromFront() {
-    if (!this.head) {
-      return null;
-    }
-    const removedNode = this.head;
-    this.head = this.head.next;
-    this.size--;
-    if (this.size === 0) {
-      this.tail = null;
-    }
-    return removedNode;
-  }
-
-  // Remove a node from the end of the linked list
-  removeFromEnd() {
-    if (!this.head) {
-      return null;
-    }
-    if (this.size === 1) {
-      const removedNode = this.head;
-      this.head = null;
-      this.tail = null;
-      this.size--;
-      return removedNode;
-    }
-    let currentNode = this.head;
-    while (currentNode.next !== this.tail) {
-      currentNode = currentNode.next;
-    }
-    const removedNode = this.tail;
-    this.tail = currentNode;
-    this.tail.next = null;
-    this.size--;
-    return removedNode;
+    this.#head = previous;
   }
 }
 
-module.exports = LinkedListNode;
+module.exports = LinkedList;
+module.exports.LinkedListNode = LinkedListNode;
+
+if (require.main === module) {
+  const list = new LinkedList();
+  list.append(15);
+  list.append(10);
+  list.prepend(20);
+  console.log(list.toString());
+}

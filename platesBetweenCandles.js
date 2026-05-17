@@ -67,22 +67,25 @@ function platesBetweenCandles(s, queries) {
   });
 }
 
-// Example usage:
-console.log(
-  platesBetweenCandles("**|**|***|", [
-    [2, 5],
-    [5, 9],
-  ]),
-); // Output: [2, 3]
-console.log(
-  platesBetweenCandles("***|**|*****|**||**|*", [
-    [1, 17],
-    [4, 5],
-    [14, 17],
-    [5, 11],
-    [15, 16],
-  ]),
-); // Output: [9, 0, 0, 0, 0]
+module.exports = platesBetweenCandles;
+
+if (require.main === module) {
+  console.log(
+    platesBetweenCandles("**|**|***|", [
+      [2, 5],
+      [5, 9],
+    ]),
+  ); // Output: [2, 3]
+  console.log(
+    platesBetweenCandles("***|**|*****|**||**|*", [
+      [1, 17],
+      [4, 5],
+      [14, 17],
+      [5, 11],
+      [15, 16],
+    ]),
+  ); // Output: [9, 0, 0, 0, 0]
+}
 
 // Complexity Analysis:
 // Time Complexity: O(n + q), where n is the length of the string s and q is the number of queries. We traverse the string once to build the prefix sums and nearest candle arrays, and then we process each query in constant time.

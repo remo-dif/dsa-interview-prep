@@ -56,13 +56,16 @@ function maxTwoEvents(events) {
   return answer;
 }
 
-// Example usage:
-const events = [
-  [1, 3, 4],
-  [2, 5, 3],
-  [4, 6, 2],
-];
-console.log(maxTwoEvents(events)); // Output: 6 (attend events [1, 3, 4] and [4, 6, 2])
+module.exports = maxTwoEvents;
+
+if (require.main === module) {
+  const events = [
+    [1, 3, 4],
+    [2, 5, 3],
+    [4, 6, 2],
+  ];
+  console.log(maxTwoEvents(events)); // Output: 6
+}
 
 // Time complexity: O(n log n) due to sorting and binary search
 // Space complexity: O(n) for the maxFromRight array

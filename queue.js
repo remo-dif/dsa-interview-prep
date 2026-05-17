@@ -1,53 +1,59 @@
-// queue.js
-const LinkedList = require("./linkedlist");
-
-// Implementation of a queue using a linked list
 class Queue {
-  // Queue structure using linked list
-  constructor() {
-    this.list = new LinkedList();
+  #items = [];
+
+  enqueue(item) {
+    this.#items.push(item);
   }
 
-  // Dequeue a value from the front of the queue
-  enqueue(value) {
-    this.list.append(value);
-  }
-
-  // Dequeue a value from the front of the queue
   dequeue() {
-    return this.list.removeFromFront();
+    return this.#items.shift();
   }
 
-  // Peek at the front value of the queue without removing it
+  front() {
+    return this.#items[0];
+  }
+
   peek() {
-    return this.list.head ? this.list.head.value : null;
+    return this.front();
   }
 
-  // Check if the queue is empty
   isEmpty() {
-    return this.list.isEmpty();
+    return this.#items.length === 0;
   }
 
-  // Get the size of the queue
+  get size() {
+    return this.#items.length;
+  }
+
   getSize() {
-    return this.list.getSize();
+    return this.size;
   }
 
-  // Print the queue
+  clear() {
+    this.#items = [];
+  }
+
+  toString() {
+    if (this.isEmpty()) {
+      return "Empty Queue";
+    }
+    return this.#items
+      .map((item) => (typeof item === "object" && item !== null ? JSON.stringify(item) : String(item)))
+      .join(", ");
+  }
+
   print() {
-    this.list.print();
+    console.log(this.toString());
   }
 }
 
-
-// Example usage:
-const queue = new Queue();
-console.log("Is queue empty?", queue.isEmpty());
-queue.enqueue(10);
-queue.enqueue(20);
-queue.enqueue(30);
-queue.print();
-console.log("Dequeued:", queue.dequeue());
-queue.print();
-
 module.exports = Queue;
+
+if (require.main === module) {
+  const queue = new Queue();
+  queue.enqueue(10);
+  queue.enqueue(20);
+  queue.enqueue(30);
+  console.log(queue.toString());
+  console.log(queue.dequeue());
+}

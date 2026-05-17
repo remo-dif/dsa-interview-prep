@@ -49,3 +49,9 @@ var countSmaller = function (nums) {
 
   return result;
 };
+
+module.exports = countSmaller;
+
+if (require.main === module) {
+  console.log(countSmaller([5, 2, 6, 1])); // Output: [2, 1, 1, 0]
+}

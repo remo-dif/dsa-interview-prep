@@ -26,3 +26,9 @@ function wordBreak(s, wordDict) {
   }
   return backtrack(0);
 }
+
+module.exports = wordBreak;
+
+if (require.main === module) {
+  console.log(wordBreak("leetcode", ["leet", "code"])); // Output: true
+}

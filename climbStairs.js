@@ -18,10 +18,13 @@ function climbStairs(n) {
   return dp[n];
 }
 
-// Example usage:
-console.log(climbStairs(2)); // Output: 2
-console.log(climbStairs(3)); // Output: 3
-console.log(climbStairs(4)); // Output: 5
+module.exports = climbStairs;
+
+if (require.main === module) {
+  console.log(climbStairs(2)); // Output: 2
+  console.log(climbStairs(3)); // Output: 3
+  console.log(climbStairs(4)); // Output: 5
+}
 
 //Complexity Analysis:
 // Time Complexity: O(n) - We compute the number of ways to climb stairs for each step from 2 to n.

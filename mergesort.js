@@ -27,7 +27,11 @@ function merge(left, right) {
     return result.concat(left.slice(i)).concat(right.slice(j));
 }
 
-// Example usage:
-const array = [38, 27, 43, 3, 9, 82, 10];
-const sortedArray = mergeSort(array);
-console.log(sortedArray); // Output: [3, 9, 10, 27, 38, 43, 82]
+module.exports = mergeSort;
+module.exports.merge = merge;
+
+if (require.main === module) {
+    const array = [38, 27, 43, 3, 9, 82, 10];
+    const sortedArray = mergeSort(array);
+    console.log(sortedArray); // Output: [3, 9, 10, 27, 38, 43, 82]
+}

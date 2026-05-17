@@ -10,7 +10,7 @@ Legend:
 
 | Status | File | What to rehearse |
 | --- | --- | --- |
-| Review | `fibonacci.js` | Iteration, recurrence, off-by-one checks, complexity |
+| Ready | `fibonacci.js` | Iteration, recurrence, off-by-one checks, complexity |
 
 Missing practice:
 
@@ -23,7 +23,7 @@ Missing practice:
 | --- | --- | --- |
 | Ready | `twoSum.js` | Hash map lookup |
 | Ready | `duplicates.js` | Set-based deduplication |
-| Review | `palindrome.js` | Expand around center, numeric palindrome |
+| Ready | `palindrome.js` | Expand around center, numeric palindrome |
 | Ready | `platesBetweenCandles.js` | Prefix sums and nearest-bound arrays |
 | Review | `findMedianSortedArrays.js` | Median of two sorted arrays, currently sort-based |
 | Ready | `compressionDecompression.js` | Stack parsing |
@@ -38,8 +38,8 @@ Missing practice:
 
 | Status | File | Topic |
 | --- | --- | --- |
-| Review | `linkedliststack.js` | Stack using linked list |
-| Review | `queue.js` | Queue using linked list |
+| Ready | `linkedliststack.js` | Book-style array-backed stack |
+| Ready | `queue.js` | Book-style array-backed queue |
 | Ready | `compressionDecompression.js` | Stack for nested expressions |
 
 Missing practice:
@@ -52,14 +52,14 @@ Missing practice:
 
 | Status | File | Topic |
 | --- | --- | --- |
-| Review | `linkedlist.js` | Singly linked list operations |
+| Ready | `linkedlist.js` | Book-style singly linked list operations |
 | Ready | `mergeTwoList.js` | Merge two sorted lists |
 | Ready | `mergeKList.js` | Pairwise merge k sorted lists |
-| Review | `NthNode.js` | Nth from end and remove nth from end |
+| Ready | `NthNode.js` | Nth from end and remove nth from end |
 | Ready | `swapPairs.js` | Pair swapping |
 | Ready | `ReverseKGroup.js` | Reverse nodes in k-group |
 | Ready | `rotateRight.js` | Circular list rotation |
-| Review | `deleteDuplicates.js` | Duplicate removal with dummy node |
+| Ready | `deleteDuplicates.js` | Duplicate removal with dummy node |
 
 Missing practice:
 
@@ -73,7 +73,7 @@ Missing practice:
 | --- | --- | --- |
 | Ready | `twoSum.js` | Map from value to index |
 | Ready | `duplicates.js` | Set uniqueness |
-| Review | `countSmaller.js` | Coordinate compression with `Map` |
+| Ready | `countSmaller.js` | Coordinate compression with `Map` |
 
 Missing practice:
 
@@ -86,7 +86,7 @@ Missing practice:
 | Status | File | Topic |
 | --- | --- | --- |
 | Ready | `hanoi.js` | Classic recursive decomposition |
-| Review | `fibonacci.js` | Iterative recurrence |
+| Ready | `fibonacci.js` | Iterative recurrence |
 | Ready | `diffWaysToCompute.js` | Recursive expression splitting with memoization |
 | Ready | `phone-numbers.js` | Backtracking combinations |
 
@@ -99,7 +99,7 @@ Missing practice:
 
 | Status | File | Topic |
 | --- | --- | --- |
-| Review | `binarysearchtree.js` | BST insert, search, min/max, delete, traversal |
+| Ready | `binarysearchtree.js` | Book-style BST insert, search, min/max, delete, traversal |
 | Review | `sortedListToBST.js` | Convert sorted linked list to balanced BST |
 
 Missing practice:
@@ -114,7 +114,7 @@ Missing practice:
 
 | Status | File | Topic |
 | --- | --- | --- |
-| Review | `graph.js` | Adjacency list, BFS, DFS, path search |
+| Ready | `graph.js` | Book-style adjacency list plus BFS, DFS, path search |
 
 Missing practice:
 
@@ -128,7 +128,7 @@ Missing practice:
 | Status | File | Topic |
 | --- | --- | --- |
 | Ready | `mergesort.js` | Divide and conquer sorting |
-| Review | `quicksort.js` | Pivot selection and partitioning |
+| Ready | `quicksort.js` | Pivot selection and partitioning |
 | Review | `findMedianSortedArrays.js` | Binary-search median target, currently not optimal |
 | Ready | `maxTwoEvents.js` | Binary search over sorted intervals |
 
@@ -157,4 +157,3 @@ Missing practice:
 - Greedy intervals: merge intervals, meeting rooms
 - DP with state compression
 - BFS as shortest path
-

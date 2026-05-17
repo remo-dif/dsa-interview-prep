@@ -34,7 +34,10 @@ var isMatch = function (s, p) {
   return dp[m][n];
 };
 
-// Example usage:
-const s = "aab";
-const p = "c*a*b";
-console.log(isMatch(s, p)); // Output: true
+module.exports = isMatch;
+
+if (require.main === module) {
+  const s = "aab";
+  const p = "c*a*b";
+  console.log(isMatch(s, p)); // Output: true
+}

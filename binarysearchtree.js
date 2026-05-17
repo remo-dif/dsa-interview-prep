@@ -1,104 +1,172 @@
-// binarysearchtree.js
+const Comparator = require("./comparator");
 
-// A simple implementation of a Binary Search Tree (BST) in JavaScript
-class Node {
-  // Node class to represent each node in the BST
-  constructor(value) {
-    this.value = value;
+class BSTNode {
+  constructor(data) {
+    this.data = data;
     this.left = null;
     this.right = null;
   }
 }
 
-// BinarySearchTree class to manage the BST operations
-class BinarySearchTreeNode {
-  // BinarySearchTree class to manage the BST operations
-  constructor() {
-    this.root = null;
+class BinarySearchTree {
+  #root = null;
+  #compare;
+
+  constructor(compareFn = Comparator.defaultCompareFn) {
+    this.#compare = new Comparator(compareFn);
   }
 
-  // Check if the tree is empty
-  isEmpty() {
-    return this.root === null;
+  get root() {
+    return this.#root;
   }
 
-  // Insert a new value into the BST
-  insert(value) {
-    const newNode = new Node(value);
-    if (this.isEmpty()) {
-      this.root = newNode;
+  insert(data) {
+    if (!this.#root) {
+      this.#root = new BSTNode(data);
     } else {
-      this.insertNode(this.root, newNode);
+      this.#insertNode(data, this.#root);
     }
   }
 
-  // Helper method to insert a node in the correct position
-  insertNode(node, newNode) {
-    if (newNode.value < node.value) {
-      if (node.left === null) {
-        node.left = newNode;
+  #insertNode(data, currentNode) {
+    if (this.#compare.lessThan(data, currentNode.data)) {
+      if (!currentNode.left) {
+        currentNode.left = new BSTNode(data);
       } else {
-        this.insertNode(node.left, newNode);
+        this.#insertNode(data, currentNode.left);
       }
     } else {
-      if (node.right === null) {
-        node.right = newNode;
+      if (!currentNode.right) {
+        currentNode.right = new BSTNode(data);
       } else {
-        this.insertNode(node.right, newNode);
+        this.#insertNode(data, currentNode.right);
       }
     }
   }
 
-  // Search for a value in the BST
-  search(value) {
-    if (!this.root) {
-      return false;
-    } else {
-      return this.searchNode(this.root, value);
-    }
+  search(data) {
+    return this.#searchNode(data, this.#root);
   }
 
-  // Helper method to search for a value in the BST
-  searchNode(node, value) {
-    if (node === null) {
+  #searchNode(data, currentNode) {
+    if (!currentNode) {
       return false;
     }
-    if (value < node.value) {
-      return this.searchNode(node.left, value);
-    } else if (value > node.value) {
-      return this.searchNode(node.right, value);
-    } else {
+    if (this.#compare.equal(data, currentNode.data)) {
       return true;
     }
-  }
-
-  // Pre-order traversal of the BST
-  preOrder(root) {
-    if (root) {
-      console.log(root.value);
-      this.preOrder(root.left);
-      this.preOrder(root.right);
+    if (this.#compare.lessThan(data, currentNode.data)) {
+      return this.#searchNode(data, currentNode.left);
+    } else {
+      return this.#searchNode(data, currentNode.right);
     }
   }
 
-  // In-order traversal of the BST
-  inOrder(root) {
-    if (root) {
-      this.inOrder(root.left);
-      console.log(root.value);
-      this.inOrder(root.right);
+  remove(data) {
+    this.#root = this.#removeNode(data, this.#root);
+  }
+
+  delete(data) {
+    this.remove(data);
+  }
+
+  #removeNode(data, currentNode) {
+    if (!currentNode) {
+      return null;
+    }
+
+    if (this.#compare.lessThan(data, currentNode.data)) {
+      currentNode.left = this.#removeNode(data, currentNode.left);
+      return currentNode;
+    } else if (this.#compare.greaterThan(data, currentNode.data)) {
+      currentNode.right = this.#removeNode(data, currentNode.right);
+      return currentNode;
+    } else {
+      if (!currentNode.left && !currentNode.right) {
+        return null;
+      }
+      if (!currentNode.left) {
+        return currentNode.right;
+      }
+      if (!currentNode.right) {
+        return currentNode.left;
+      }
+
+      const minNode = this.#findMinNode(currentNode.right);
+      currentNode.data = minNode.data;
+      currentNode.right = this.#removeNode(minNode.data, currentNode.right);
+      return currentNode;
     }
   }
 
-  // Post-order traversal of the BST
-  levelOrder() {
+  min() {
+    return this.#root ? this.#findMinNode(this.#root).data : null;
+  }
+
+  minValueNode(node = this.#root) {
+    return node ? this.#findMinNode(node).data : null;
+  }
+
+  #findMinNode(node) {
+    return node.left ? this.#findMinNode(node.left) : node;
+  }
+
+  max() {
+    return this.#root ? this.#findMaxNode(this.#root).data : null;
+  }
+
+  maxValueNode(node = this.#root) {
+    return node ? this.#findMaxNode(node).data : null;
+  }
+
+  #findMaxNode(node) {
+    return node.right ? this.#findMaxNode(node.right) : node;
+  }
+
+  inOrderTraverse(callback) {
+    this.#inOrderTraverseNode(this.#root, callback);
+  }
+
+  #inOrderTraverseNode(node, callback) {
+    if (node) {
+      this.#inOrderTraverseNode(node.left, callback);
+      callback(node.data);
+      this.#inOrderTraverseNode(node.right, callback);
+    }
+  }
+
+  preOrderTraverse(callback) {
+    this.#preOrderTraverseNode(this.#root, callback);
+  }
+
+  #preOrderTraverseNode(node, callback) {
+    if (node) {
+      callback(node.data);
+      this.#preOrderTraverseNode(node.left, callback);
+      this.#preOrderTraverseNode(node.right, callback);
+    }
+  }
+
+  postOrderTraverse(callback) {
+    this.#postOrderTraverseNode(this.#root, callback);
+  }
+
+  #postOrderTraverseNode(node, callback) {
+    if (node) {
+      this.#postOrderTraverseNode(node.left, callback);
+      this.#postOrderTraverseNode(node.right, callback);
+      callback(node.data);
+    }
+  }
+
+  levelOrderTraverse(callback) {
     const queue = [];
-    if (this.root) {
-      queue.push(this.root);
+    if (this.#root) {
+      queue.push(this.#root);
     }
-    while (queue.length > 0) {
+    while (queue.length) {
       const currentNode = queue.shift();
-      console.log(currentNode.value);
+      callback(currentNode.data);
       if (currentNode.left) {
         queue.push(currentNode.left);
       }
@@ -108,71 +176,50 @@ class BinarySearchTreeNode {
     }
   }
 
-  // Find the minimum value in the BST
-  minValueNode(node) {
-    if (node.left === null) {
-      return node.value;
-    } else {
-      return this.minValueNode(node.left);
-    }
+  isEmpty() {
+    return !this.#root;
   }
 
-  // Find the maximum value in the BST
-  maxValueNode(node) {
-    if (node.right === null) {
-      return node.value;
-    } else {
-      return this.maxValueNode(node.right);
-    }
+  inOrder(root = this.#root) {
+    const result = [];
+    const traverse = (node) => {
+      if (!node) return;
+      traverse(node.left);
+      result.push(node.data);
+      traverse(node.right);
+    };
+    traverse(root);
+    return result;
   }
 
-  // Delete a value from the BST
-  delete(value) {
-    this.root = this.deleteNode(this.root, value);
+  preOrder(root = this.#root) {
+    const result = [];
+    const traverse = (node) => {
+      if (!node) return;
+      result.push(node.data);
+      traverse(node.left);
+      traverse(node.right);
+    };
+    traverse(root);
+    return result;
   }
 
-  // Helper method to delete a node from the BST
-  deleteNode(node, value) {
-    if (node === null) {
-      return null;
-    }
-    if (value < node.value) {
-      node.left = this.deleteNode(node.left, value);
-      return node;
-    } else if (value > node.value) {
-      node.right = this.deleteNode(node.right, value);
-      return node;
-    } else {
-      // Node with only one child or no child
-      if (node.left === null) {
-        return node.right;
-      } else if (node.right === null) {
-        return node.left;
-      }
-      // Node with two children: Get the inorder successor (smallest in the right subtree)
-      const minRight = this.minValueNode(node.right);
-      node.value = minRight;
-      node.right = this.deleteNode(node.right, minRight);
-      return node;
-    }
+  levelOrder() {
+    const result = [];
+    this.levelOrderTraverse((data) => result.push(data));
+    return result;
   }
 }
 
-// Example usage
-const bst = new BinarySearchTreeNode();
-bst.insert(15);
-bst.insert(10);
-bst.insert(20);
-bst.insert(8);
-bst.insert(12);
-bst.insert(17);
-bst.insert(25);
-console.log("In-order Traversal:");
-bst.inOrder(bst.root);
-console.log("Search for 10:", bst.search(10));
-console.log("Minimum value:", bst.minValueNode(bst.root));
-console.log("Maximum value:", bst.maxValueNode(bst.root));
-console.log("Level-order Traversal:");
-bst.levelOrder();
+module.exports = BinarySearchTree;
+module.exports.BSTNode = BSTNode;
 
-module.exports = BinarySearchTreeNode;
+if (require.main === module) {
+  const bst = new BinarySearchTree();
+  [15, 10, 20, 8, 12, 17, 25].forEach((value) => bst.insert(value));
+  console.log(bst.inOrder().join(", "));
+  console.log(bst.search(10));
+  console.log(bst.min());
+  console.log(bst.max());
+  console.log(bst.levelOrder().join(", "));
+}

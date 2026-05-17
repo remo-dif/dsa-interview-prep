@@ -30,3 +30,5 @@ function rotateRight(head, k) {
 
     return newHead;
 }
+
+module.exports = rotateRight;

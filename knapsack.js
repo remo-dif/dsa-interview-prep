@@ -22,11 +22,13 @@ function Knapsack(weights, values, capacity) {
   return dp[n][capacity];
 }
 
-// Example usage:
-const weights = [10, 20, 30];
-const values = [60, 100, 120];
-const capacity = 50;
+module.exports = Knapsack;
 
-console.log(Knapsack(weights, values, capacity)); // Output: 220
+if (require.main === module) {
+  const weights = [10, 20, 30];
+  const values = [60, 100, 120];
+  const capacity = 50;
+  console.log(Knapsack(weights, values, capacity)); // Output: 220
+}
 
 // Complexity: O(n * capacity) where n is the number of items and capacity is the maximum weight capacity of the knapsack.

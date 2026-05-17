@@ -1,21 +1,23 @@
-const LinkedListNode = require("./linkedlist");
+function ListNode(val, next = null) {
+  this.val = val;
+  this.next = next;
+}
 
-// NthNode.js
-// Function to get the Nth node from the end of the linked list
-
-function getNthFromEnd(linkedList, n) {
-  if (n <= 0 || n > linkedList.size) {
+function getNthFromEnd(head, n) {
+  if (n <= 0 || !head) {
     return null;
   }
 
-  let fast = linkedList.head;
-  let slow = linkedList.head;
+  let fast = head;
+  let slow = head;
 
   for (let i = 0; i < n; i++) {
+    if (!fast) {
+      return null;
+    }
     fast = fast.next;
   }
 
-  // Move both pointers until fast reaches the end
   while (fast) {
     slow = slow.next;
     fast = fast.next;
@@ -24,53 +26,46 @@ function getNthFromEnd(linkedList, n) {
   return slow;
 }
 
-// Alternative approach using two-pointer technique
-function removeNthFromEndTwoPointer(linkedList, n) {
-  if (n <= 0 || n > linkedList.size || !linkedList.head) {
-    return null;
-  }
-
-  // Dummy *node* (plain object, not LinkedListNode)
-  const dummy = { value: 0, next: linkedList.head };
+function removeNthFromEndTwoPointer(head, n) {
+  const dummy = new ListNode(0, head);
 
   let fast = dummy;
   let slow = dummy;
 
-  // Move fast n+1 steps ahead
   for (let i = 0; i <= n; i++) {
+    if (!fast) {
+      return head;
+    }
     fast = fast.next;
   }
 
-  // Move both pointers
   while (fast) {
     fast = fast.next;
     slow = slow.next;
   }
 
-  // Remove the nth node from end
-  const removedNode = slow.next;
   slow.next = slow.next.next;
-
-  // Update head if needed
-  linkedList.head = dummy.next;
-
-  // Update tail if needed
-  if (!removedNode.next) {
-    linkedList.tail = slow === dummy ? null : slow;
-  }
-
-  linkedList.size--;
-
-  return removedNode;
+  return dummy.next;
 }
 
-// Example usage:
-const linkedList = new LinkedListNode();
-linkedList.append(10);
-linkedList.append(20);
-linkedList.append(30);
-linkedList.append(40);
-linkedList.print();
-// const nthNode = getNthFromEnd(linkedList, 2); // Should return the node with value 20
-const nthNode = removeNthFromEndTwoPointer(linkedList, 2); // Should return the node with value 20
-console.log(nthNode ? nthNode.value : null);
+function toArray(head) {
+  const result = [];
+  let current = head;
+  while (current) {
+    result.push(current.val);
+    current = current.next;
+  }
+  return result;
+}
+
+module.exports = {
+  ListNode,
+  getNthFromEnd,
+  removeNthFromEndTwoPointer,
+};
+
+if (require.main === module) {
+  const head = new ListNode(10, new ListNode(20, new ListNode(30, new ListNode(40))));
+  console.log(getNthFromEnd(head, 2)?.val); // Output: 30
+  console.log(toArray(removeNthFromEndTwoPointer(head, 2))); // Output: [10, 20, 40]
+}

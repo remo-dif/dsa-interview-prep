@@ -31,3 +31,4 @@ function mergeKLists(lists) {
 // Complexity Analysis
 // Time Complexity: O(N log k), where N is the total number of nodes across all lists and k is the number of lists.
 // Space Complexity: O(1) if we ignore the recursion stack used in mergeTwoLists.
+module.exports = mergeKLists;

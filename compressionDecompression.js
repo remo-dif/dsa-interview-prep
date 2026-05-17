@@ -51,10 +51,13 @@ function decompressString(s) {
   return currentString;
 }
 
-// Example usage:
-console.log(decompressString("3[abc]4[ab]c")); // Output: "abcabcabcababababc"
-console.log(decompressString("2[3[a]b]")); // Output: "aaabaaab"
-console.log(decompressString("10[a]")); // Output: "aaaaaaaaaa"
+module.exports = decompressString;
+
+if (require.main === module) {
+  console.log(decompressString("3[abc]4[ab]c")); // Output: "abcabcabcababababc"
+  console.log(decompressString("2[3[a]b]")); // Output: "aaabaaab"
+  console.log(decompressString("10[a]")); // Output: "aaaaaaaaaa"
+}
 
 // Complexity Analysis:
 // Time Complexity: O(n * m), where n is the length of the input string and m is the maximum number of repetitions. In the worst case, if we have a large number of repetitions, it can lead to a significant increase in time complexity.

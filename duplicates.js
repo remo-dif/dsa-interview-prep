@@ -1,5 +1,3 @@
-const arrayWithDuplicates = [1, 2, 3, 2, 4, 1, 5, 3]; // Example array with duplicates
-
 function removeDuplicates(arr) {
   const uniqueElements = new Set();
 
@@ -12,5 +10,10 @@ function removeDuplicates(arr) {
   }, []);
 }
 
-const uniqueArray = removeDuplicates(arrayWithDuplicates);
-console.log(uniqueArray); // Output: [1, 2, 3, 4, 5]
+module.exports = removeDuplicates;
+
+if (require.main === module) {
+  const arrayWithDuplicates = [1, 2, 3, 2, 4, 1, 5, 3];
+  const uniqueArray = removeDuplicates(arrayWithDuplicates);
+  console.log(uniqueArray); // Output: [1, 2, 3, 4, 5]
+}

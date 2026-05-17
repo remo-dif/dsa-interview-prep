@@ -1,6 +1,3 @@
-// ReverseKGroup.js
-const LinkedListNode = require("./linkedlist");
-
 // Function to reverse nodes of a linked list in k-groups
 function reverseKGroup(head, k) {
   // Base case checks
@@ -41,3 +38,4 @@ function reverseKGroup(head, k) {
 // Complexity Analysis
 // Time Complexity: O(N), where N is the number of nodes in the linked list.
 // Space Complexity: O(1) since we are reversing the nodes in place.
+module.exports = reverseKGroup;

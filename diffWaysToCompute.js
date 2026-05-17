@@ -39,9 +39,12 @@ function diffWaysToCompute(expression) {
   return compute(0, expression.length);
 }
 
-// Example usage:
-const expression = "2*3-4*5";
-console.log(diffWaysToCompute(expression)); // Output: [-34, -14, -10, -10, 10]
+module.exports = diffWaysToCompute;
+
+if (require.main === module) {
+  const expression = "2*3-4*5";
+  console.log(diffWaysToCompute(expression)); // Output: [-34, -14, -10, -10, 10]
+}
 
 // Complexity Analysis:
 // Time Complexity: O(n^3) in the worst case, where n is the length of the expression. This is because we are splitting the expression at every operator and recursively computing results for left and right sub-expressions.

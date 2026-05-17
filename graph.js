@@ -1,83 +1,98 @@
-// graph.js
-
-// A simple implementation of an undirected graph using adjacency list in JavaScript
-
 class Graph {
-  constructor() {
-    this.adjacencyList = {};
+  #isDirected;
+  #vertices = [];
+  #adjList = new Map();
+
+  constructor(isDirected = false) {
+    this.#isDirected = isDirected;
   }
 
-  // Add a vertex to the graph
   addVertex(vertex) {
-    if (!this.adjacencyList[vertex]) {
-      this.adjacencyList[vertex] = [];
+    if (!this.#vertices.includes(vertex)) {
+      this.#vertices.push(vertex);
+      this.#adjList.set(vertex, []);
     }
   }
 
-  // Add an edge between two vertices
-  addEdge(vertex1, vertex2) {
-    this.addVertex(vertex1);
-    this.addVertex(vertex2);
-    this.adjacencyList[vertex1].push(vertex2);
-    this.adjacencyList[vertex2].push(vertex1); // For undirected graph
+  addEdge(vertex, edge) {
+    if (!this.#adjList.has(vertex)) {
+      this.addVertex(vertex);
+    }
+    if (!this.#adjList.has(edge)) {
+      this.addVertex(edge);
+    }
+    this.#adjList.get(vertex).push(edge);
+    if (!this.#isDirected) {
+      this.#adjList.get(edge).push(vertex);
+    }
   }
 
-  // Remove an edge between two vertices
-  removeEdge(vertex1, vertex2) {
-    this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(
-      (v) => v !== vertex2
-    );
-    this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(
-      (v) => v !== vertex1
-    );
+  removeEdge(vertex, edge) {
+    if (this.#adjList.has(vertex)) {
+      this.#adjList.set(vertex, this.#adjList.get(vertex).filter((neighbor) => neighbor !== edge));
+    }
+    if (!this.#isDirected && this.#adjList.has(edge)) {
+      this.#adjList.set(edge, this.#adjList.get(edge).filter((neighbor) => neighbor !== vertex));
+    }
   }
 
-  // Remove a vertex and all connected edges
   removeVertex(vertex) {
-    while (this.adjacencyList[vertex]?.length) {
-      const adjacentVertex = this.adjacencyList[vertex].pop();
-      this.removeEdge(vertex, adjacentVertex);
+    if (!this.#adjList.has(vertex)) {
+      return false;
     }
-    delete this.adjacencyList[vertex];
+
+    for (const neighbor of [...this.#adjList.get(vertex)]) {
+      this.removeEdge(vertex, neighbor);
+    }
+    if (this.#isDirected) {
+      this.#vertices.forEach((currentVertex) => this.removeEdge(currentVertex, vertex));
+    }
+    this.#adjList.delete(vertex);
+    this.#vertices = this.#vertices.filter((currentVertex) => currentVertex !== vertex);
+    return true;
   }
 
-  // Display the graph
+  get vertices() {
+    return [...this.#vertices];
+  }
+
+  get adjList() {
+    return this.#adjList;
+  }
+
+  get adjacencyList() {
+    return Object.fromEntries(this.#adjList);
+  }
+
   display() {
-    for (let vertex in this.adjacencyList) {
-      console.log(vertex + " -> " + this.adjacencyList[vertex].join(", "));
-    }
+    console.log(this.toString());
   }
 
-  // Depth-First Search (DFS) traversal
-  dfs(start) {
-    const result = [];
-    const visited = {};
-    const adjacencyList = this.adjacencyList;
-    (function dfsHelper(vertex) {
-      if (!vertex) return;
-      visited[vertex] = true;
-      result.push(vertex);
-      adjacencyList[vertex].forEach((neighbor) => {
-        if (!visited[neighbor]) {
-          dfsHelper(neighbor);
-        }
-      });   
-    })(start);
-    return result;
+  toString() {
+    let result = "";
+    this.#vertices.forEach((vertex) => {
+      result += `${vertex} -> `;
+      this.#adjList.get(vertex).forEach((neighbor) => {
+        result += `${neighbor} `;
+      });
+      result += "\n";
+    });
+    return result.trimEnd();
   }
 
-  // Breadth-First Search (BFS) traversal
   bfs(start) {
+    if (!this.#adjList.has(start)) {
+      return [];
+    }
     const queue = [start];
     const result = [];
-    const visited = {};
-    visited[start] = true;
+    const visited = new Set([start]);
     while (queue.length) {
       const vertex = queue.shift();
       result.push(vertex);
-      this.adjacencyList[vertex].forEach((neighbor) => {
-        if (!visited[neighbor]) {
-          visited[neighbor] = true;
+      this.#adjList.get(vertex).forEach((neighbor) => {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
           queue.push(neighbor);
         }
       });
@@ -85,45 +100,41 @@ class Graph {
     return result;
   }
 
-  // Check if there is a path between two vertices using DFS
-  hasPathDFS(source, destination) {
-    const visited = {};
-    const adjacencyList = this.adjacencyList;
-    function hasPath(vertex) {
-      if (vertex === destination) return true;
-      visited[vertex] = true;
-      for (let neighbor of adjacencyList[vertex]) {
-        if (!visited[neighbor]) {
-          if (hasPath(neighbor)) {
-            return true;
-          }
-        }
-      }
-      return false;
+  dfs(start) {
+    if (!this.#adjList.has(start)) {
+      return [];
     }
-    return hasPath(source);
+    const result = [];
+    const visited = new Set();
+    const visit = (vertex) => {
+      visited.add(vertex);
+      result.push(vertex);
+      this.#adjList.get(vertex).forEach((neighbor) => {
+        if (!visited.has(neighbor)) {
+          visit(neighbor);
+        }
+      });
+    };
+    visit(start);
+    return result;
   }
 
-  // Check if there is a path between two vertices using BFS
+  hasPathDFS(source, destination) {
+    return this.dfs(source).includes(destination);
+  }
+
   hasPathBFS(source, destination) {
-    if (!this.adjacencyList[source] || !this.adjacencyList[destination]) {
-      return false;
-    }
-    const queue = [source];
-    const visited = {};
-    visited[source] = true;
-    while (queue.length) {
-      const vertex = queue.shift();
-      if (vertex === destination) return true;
-      for (let neighbor of this.adjacencyList[vertex]) {
-        if (!visited[neighbor]) {
-          visited[neighbor] = true;
-          queue.push(neighbor);
-        }
-      }
-    }
-    return false;
+    return this.bfs(source).includes(destination);
   }
 }
 
 module.exports = Graph;
+
+if (require.main === module) {
+  const graph = new Graph();
+  graph.addEdge("A", "B");
+  graph.addEdge("B", "C");
+  console.log(graph.toString());
+  console.log(graph.bfs("A"));
+  console.log(graph.dfs("A"));
+}

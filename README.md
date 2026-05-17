@@ -1,6 +1,15 @@
 # DSA Interview Prep
 
-This folder organizes the JavaScript solutions in the parent directory by the flow of *Learning JavaScript Data Structures and Algorithms, Third Edition* and by technical interview usefulness.
+This repository organizes JavaScript data structures and algorithm exercises by the flow of *Learning JavaScript Data Structures and Algorithms, Third Edition* and by technical interview usefulness.
+
+The core data-structure files now follow the book's implementation style:
+
+- `linkedlist.js`: `LinkedList` and `LinkedListNode` with `data`, `append`, `prepend`, `insert`, `removeAt`, `remove`, `indexOf`, `size`, `toString`, and `reverse`.
+- `linkedliststack.js`: array-backed `Stack` with private items.
+- `queue.js`: array-backed `Queue` with private items.
+- `binarysearchtree.js`: `BinarySearchTree` with comparator support, traversal callbacks, `min`, `max`, `search`, and `remove`.
+- `graph.js`: adjacency-list `Graph` backed by `Map`, with directed/undirected support.
+- `compare.js` and `comparator.js`: small comparison helpers used by ordered structures.
 
 Use this in three passes:
 
@@ -69,3 +78,11 @@ For each problem, prepare these five things:
 4. Time and space complexity
 5. Three edge cases
 
+## Running Checks
+
+```bash
+node --check linkedlist.js
+node quicksort.js
+```
+
+Most files export their main function or class and only run sample output when executed directly.

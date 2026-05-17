@@ -35,10 +35,13 @@ function twoSum(nums, target) {
   return []; // Return an empty array if no solution is found (though the problem guarantees one solution).
 }
 
-// Example usage (runs only when executed directly).
-const nums = [2, 7, 11, 15];
-const target = 9;
-console.log(twoSum(nums, target)); // [0, 1]
+module.exports = twoSum;
+
+if (require.main === module) {
+  const nums = [2, 7, 11, 15];
+  const target = 9;
+  console.log(twoSum(nums, target)); // [0, 1]
+}
 
 // Time complexity: O(n) - We traverse the array once.
 // Space complexity: O(n) - In the worst case, we store all elements in the map.

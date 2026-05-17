@@ -15,3 +15,8 @@ function findMedianSortedArrays(nums1, nums2) {
 }
 
 // complexity: O((m + n) log(m + n)) where m and n are the lengths of nums1 and nums2 respectively, due to the sorting step.
+module.exports = findMedianSortedArrays;
+
+if (require.main === module) {
+  console.log(findMedianSortedArrays([1, 3], [2])); // Output: 2
+}

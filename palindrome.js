@@ -1,6 +1,7 @@
-const str = "babad";
-
 function longestPalindromicSubstring(s) {
+  if (s.length === 0) {
+    return "";
+  }
   let start = 0,
     maxLength = 1;
   const n = s.length;
@@ -23,19 +24,22 @@ function longestPalindromicSubstring(s) {
   return s.substring(start, start + maxLength);
 }
 
-console.log(longestPalindromicSubstring(str));
-
 /**
  * @param {number} x
  * @return {boolean}
  */
 function isPalindrome(x) {
-    const str = x.toString();
-    const reversedStr = str.split('').reverse().join('');
-    return str === reversedStr; 
-};
+  const str = x.toString();
+  const reversedStr = str.split("").reverse().join("");
+  return str === reversedStr;
+}
 
 module.exports = {
   longestPalindromicSubstring,
   isPalindrome,
 };
+
+if (require.main === module) {
+  console.log(longestPalindromicSubstring("babad"));
+  console.log(isPalindrome(121));
+}
