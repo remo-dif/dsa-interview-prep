@@ -43,7 +43,6 @@ function getIntersectionNode(headA, headB) {
 }
 
 module.exports = {
-  LinkedListNode,
   getIntersectionNode,
   getIntersectionNodeWithSet,
 };

@@ -3,10 +3,7 @@
  *
  * Return the node where the cycle begins. If there is no cycle, return null.
  */
-function ListNode(val, next = null) {
-  this.val = val;
-  this.next = next;
-}
+const { LinkedListNode } = require('./linkedlist');
 
 function detectCycle(head) {
   const visited = new Set();
@@ -25,20 +22,19 @@ function detectCycle(head) {
 }
 
 module.exports = {
-  ListNode,
   detectCycle,
 };
 
 if (require.main === module) {
-  const head = new ListNode(3);
-  const node2 = new ListNode(2);
-  const node0 = new ListNode(0);
-  const node4 = new ListNode(-4);
+  const head = new LinkedListNode(3);
+  const node2 = new LinkedListNode(2);
+  const node0 = new LinkedListNode(0);
+  const node4 = new LinkedListNode(-4);
 
   head.next = node2;
   node2.next = node0;
   node0.next = node4;
   node4.next = node2;
 
-  console.log(detectCycle(head)?.val); // Output: 2
+  console.log(detectCycle(head)?.data); // Output: 2
 }
